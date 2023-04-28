@@ -5,15 +5,17 @@ fs.readFile('./resource/content.txt',(err,data)=>{
     console.log(data.toString())
 })*/
 
-let p = new Promise(((resolve, reject) => {
-    fs.readFile('./resource/content.txt',(err,data)=>{
-        if (err) reject(err);
-        resolve(data);
-    })
-}))
-p.then(value => {
-    console.log(value.toString())
-},reason => {
-    console.log(reason)
+let p = new Promise((resolve, reject) => {
+  fs.readFile('./resource/content.txt', (err, data) => {
+    if (err) reject(err)
+    resolve(data)
+  })
 })
-
+p.then(
+  (value) => {
+    console.log(value.toString())
+  },
+  (reason) => {
+    console.log(reason)
+  }
+)

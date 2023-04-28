@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Promise 封装AJAX</title>
 </head>
+
 <body>
-<div class="container">
-    <h2 class="page-header">Promise 封装AJAX操作</h2>
-    <button class="btn btn-primary" id="btn">点击发送AJAX</button>
-</div>
-<script>
-    const btn = document.querySelector('#btn')
-    btn.addEventListener('click',function (){
-        const p = new Promise((resolve, reject) => {
-            //1.创建对象
-            const xhr = new XMLHttpRequest()
-            //2.初始化
-            xhr.open('GET','https://api.apiopen.top/getJoke')
-            //3.发送
-            xhr.send();
-            //4.绑定事件处理响应结果
-            xhr.onreadystatechange=function (){
-                if (xhr.readyState===4){
-                    //判断响应状态码2xx
-                    if (xhr.status>=200 && xhr.status<300){
-                        //控制台输出
-                        resolve(xhr.response)
-                       // console.log(xhr.response)
-                    }else{
-                        reject(xhr.status)
-                        //console.log(xhr.status)
+    <div class="container">
+        <h2 class="page-header">Promise 封装AJAX操作</h2>
+        <button class="btn btn-primary" id="btn">点击发送AJAX</button>
+    </div>
+    <script>
+        const btn = document.querySelector('#btn')
+        btn.addEventListener('click', function () {
+            const p = new Promise((resolve, reject) => {
+                //1.创建对象
+                const xhr = new XMLHttpRequest()
+                //2.初始化
+                xhr.open('GET', 'https://api.apiopen.top/getJoke')
+                //3.发送
+                xhr.send()
+                //4.绑定事件处理响应结果
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        //判断响应状态码2xx
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            //控制台输出
+                            resolve(xhr.response)
+                            // console.log(xhr.response)
+                        } else {
+                            reject(xhr.status)
+                            //console.log(xhr.status)
+                        }
                     }
                 }
-            }
+            })
+            p.then(value => {
+                console.log(value)
+            }, reason => {
+                console.warn(reason)
+            })
         })
-        p.then(value => {
-            console.log(value)
-        },reason => {
-            console.warn(reason)
-        })
-    })
-</script>
+    </script>
 
 </body>
+
 </html>
