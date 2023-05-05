@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4-async与await结合</title>
+</head>
+
+<body>
+  <div class="container">
+    <button class="btn btn-primary" id="btn">点击获取段子</button>
+  </div>
+  <script>
+    function sendAJAX (url) {
+      return new Promise((resolve, reject) => {
+        //1.创建对象
+        const xhr = new XMLHttpRequest()
+        xhr.responseType = "json"
+        //2.初始化
+        xhr.open('GET', url)
+        //3.发送
+        xhr.send()
+        //4.绑定事件处理响应结果
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            //判断响应状态码2xx
+            if (xhr.status >= 200 && xhr.status < 300) {
+              //控制台输出
+              resolve(xhr.response)
+            } else {
+              reject(xhr.status)
+            }
+          }
+        }
+      })
+    }
+
+    let btn = document.querySelector('#btn')
+    btn.addEventListener('click', async () => {
+      let duanzi = await sendAJAX('https://www.fastmock.site/mock/1ebd75ea5b7c8f4d13459a04039c68e6/api/product/getBaseCategoryList')
+      console.log(duanzi)
+    })
+  </script>
+
+
+</body>
+
+</html>
